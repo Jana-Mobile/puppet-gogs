@@ -64,6 +64,7 @@ class gogs::install (
         Exec['remove:/tmp/download_gogs_from_github.sh'],
         Service[$gogs::params::service_name]
       ],
+      unless => "/bin/bash -c 'DOWNLOAD_VERSION_URL=\"https://raw.githubusercontent.com/gogits/gogs/v\${PUPPET_GOGS_VERSION}/templates/.VERSION\" REMOTE_VERSION=$(wget -O- -q \${DOWNLOAD_VERSION_URL}) LOCAL_VERSION=\$(<${PUPPET_GOGS_INSTALLATION_DIRECTORY}/templates/.VERSION) && [[ \${LOCAL_VERSION} == \${REMOTE_VERSION} ]]'"
     }
 
   exec { 'remove:/tmp/download_gogs_from_github.sh':
